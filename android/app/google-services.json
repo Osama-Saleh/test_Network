@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "168602349215",
+    "project_id": "flutter-maps-f8444",
+    "storage_bucket": "flutter-maps-f8444.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168602349215:android:822b0b42d8480120bc7caa",
+        "android_client_info": {
+          "package_name": "com.example.flutter_map"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168602349215-q0tncjcc39lsodqge6hr5tbhkivlsp4p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD4Kt0r4SIZGBqstjODtGoJB4rCnmmvbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168602349215-q0tncjcc39lsodqge6hr5tbhkivlsp4p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168602349215:android:ceae80ce86b82a86bc7caa",
+        "android_client_info": {
+          "package_name": "com.example.netwrok"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168602349215-g3le8rkt2i0oaq6jb4vc8ddu6eu4mc0b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.netwrok",
+            "certificate_hash": "34778448f3212f9c924926364243ac03bca3a140"
+          }
+        },
+        {
+          "client_id": "168602349215-q0tncjcc39lsodqge6hr5tbhkivlsp4p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD4Kt0r4SIZGBqstjODtGoJB4rCnmmvbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168602349215-q0tncjcc39lsodqge6hr5tbhkivlsp4p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

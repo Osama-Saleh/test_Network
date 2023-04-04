@@ -17,14 +17,14 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: const Color.fromRGBO(47, 70, 109, 60),
           body: state is ProductLoadingState
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : SafeArea(
                   child: ListView.separated(
                       itemBuilder: (context, index) {
                         return Container(
                           height: 100,
                           clipBehavior: Clip.antiAlias,
-                          margin: EdgeInsets.all(10),
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(20),
@@ -32,7 +32,8 @@ class HomeScreen extends StatelessWidget {
                                 BoxShadow(offset: Offset(0, 5), blurRadius: 8)
                               ]),
                           child: OpenContainer(
-                            transitionDuration: Duration(milliseconds: 1000),
+                            transitionDuration:
+                                const Duration(milliseconds: 1000),
                             closedBuilder: (context, action) {
                               return InkWell(
                                   onTap: action,
@@ -44,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                         );
                       },
                       separatorBuilder: (context, index) => const SizedBox(
-                            height: 10,
+                            height: 5,
                           ),
                       itemCount: HomeCubit.get(context).product!.length),
                 ),
