@@ -5,29 +5,25 @@ class MyElevatedButton extends StatelessWidget {
   const MyElevatedButton({
     super.key,
     required this.formKey,
-    required this.mailController,
-    required this.passwrodController,
+   
     required this.text,
+    required this.onPressed
   });
   final String? text;
   final GlobalKey<FormState> formKey;
-  final TextEditingController mailController;
-  final TextEditingController passwrodController;
+ 
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        if (formKey.currentState!.validate()) {
-          HomeCubit.get(context).userRegisted(
-              mail: mailController.text, password: passwrodController.text);
-        }
-      },
+      onPressed:onPressed,
+       
       style: const ButtonStyle(
           backgroundColor: MaterialStatePropertyAll(
         Color.fromARGB(255, 48, 119, 177),
       )),
-      child:  Text(
+      child: Text(
         text!,
       ),
     );

@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:netwrok/constaint/constant.dart';
 import 'package:netwrok/view/Home_Screen.dart';
 import 'package:lottie/lottie.dart';
+import 'package:netwrok/view/register_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,19 +23,22 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   navigatToHome() async {
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 6));
     // ignore: use_build_context_synchronously
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ));
+    if(Constant.uid == null ||Constant.uid == "")
+    {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterScreen(),));
+    }else{
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+
+    };
   }
 
   @override
   void initState() {
     startAnimation();
     navigatToHome();
+    
     super.initState();
   }
 

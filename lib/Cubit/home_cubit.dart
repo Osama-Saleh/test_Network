@@ -11,6 +11,9 @@ class HomeCubit extends Cubit<HomeStates> {
   HomeCubit() : super(InitState());
   static HomeCubit get(context) => BlocProvider.of(context);
 
+  //*===================================================//
+  //*=================Register user=====================//
+  //*====================================== ============//
   void userRegisted({required String mail, required String password}) {
     emit(RegisterLoadingState());
     print("RegisterLoadingState");
@@ -29,6 +32,39 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  //*==================================================//
+  //*=================  Sign In  =====================//
+  //*================================================//
+  Future<void> userSigneIn(
+      {required String mail, required String password}) async {
+    emit(SigninLoadingState());
+    print("SigninLoadingState");
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: mail, password: password)
+        .then((value) {
+      print("Uid : ${value.user!.uid}");
+      emit(SigninSuccessState(token: value.user!.uid));
+      print("SigninSuccessState");
+    }).catchError((onError) {
+      emit(SigninErrorState());
+      print("SigninErrorState $onError");
+    });
+  }
+
+  //*==================================================//
+  //*=================  forget Password  =====================//
+  //*================================================//
+  Future<void> resetPassword({required String mail}) async {
+    await FirebaseAuth.instance
+        .sendPasswordResetEmail(email: mail)
+        .then((value) {
+      print("reset Pass");
+    }).catchError((onError) {});
+  }
+
+  //*=====================================================//
+  //*=================git products from API===============//
+  //*=====================================================//
   List<ProductModel>? product;
   void getProducts() async {
     emit(ProductLoadingState());

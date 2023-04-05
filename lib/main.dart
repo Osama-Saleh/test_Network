@@ -1,9 +1,13 @@
+// ignore_for_file: await_only_futures, avoid_print
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netwrok/Cubit/home_cubit.dart';
 import 'package:netwrok/Cubit/home_cubit_state.dart';
+import 'package:netwrok/constaint/constant.dart';
 import 'package:netwrok/network/http_helper.dart';
+import 'package:netwrok/storage/shared.dart';
 import 'package:netwrok/view/register_screen.dart';
 import 'package:netwrok/view/splash_screen.dart';
 
@@ -11,6 +15,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await DioHelper.init();
+  await SharedPreference.initialSharedPreference();
+   Constant.uid = await SharedPreference.getDataSt(key: "uid");
+
+print("uid : ${Constant.uid}");
   runApp(const MyApp());
 }
 
@@ -26,16 +34,16 @@ class MyApp extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return MaterialApp(
-            title: 'Flutter Demo',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            home: 
-            // RegisterScreen()
-                // HomeScreen(),
-              const  SplashScreen(),
-          );
+              title: 'Flutter Demo',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              home: 
+              RegisterScreen()
+              // HomeScreen(),
+              // const  SplashScreen(),
+              );
         },
       ),
     );
