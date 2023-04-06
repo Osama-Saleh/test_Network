@@ -25,3 +25,29 @@ class SigninSuccessState extends HomeStates {
 }
 
 class SigninErrorState extends HomeStates {}
+
+class ChangeBottomNavBarState extends HomeStates {}
+
+class CreatUserLoadingState extends HomeStates {}
+
+class CreatUserSuccessState extends HomeStates {}
+
+class CreatUserErrorState extends HomeStates {}
+
+class GetUserDateLoadingState extends HomeStates {}
+
+class GetUserDateSuccessState extends HomeStates {}
+
+class GetUserDateErrorState extends HomeStates {}
+
+class UpdateUserDateLoadingState extends HomeStates {}
+
+class UpdateUserDateSuccessState extends HomeStates {}
+
+class UpdateUserDateErrorState extends HomeStates {}
+
+class ProfileImageLoadingState extends HomeStates {}
+
+class ProfileImageSuccessState extends HomeStates {}
+
+class ProfileImageErrorState extends HomeStates {}

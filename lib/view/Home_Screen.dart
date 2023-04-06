@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: const Color.fromRGBO(47, 70, 109, 60),
-          body: state is ProductLoadingState
+          body: HomeCubit.get(context).product == null
               ? const Center(child: CircularProgressIndicator())
               : SafeArea(
                   child: ListView.separated(

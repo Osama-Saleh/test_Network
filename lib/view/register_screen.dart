@@ -7,6 +7,7 @@ import 'package:netwrok/Cubit/home_cubit_state.dart';
 import 'package:netwrok/Widget/register_screen/my_elevated_button.dart';
 import 'package:netwrok/Widget/register_screen/my_text_form_field.dart';
 import 'package:netwrok/storage/shared.dart';
+import 'package:netwrok/view/button_app_bar.dart';
 import 'package:netwrok/view/login_Screen.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -19,7 +20,15 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is RegisterSuccessState) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MyButtonAppBarScreen(),
+              ));
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           body: SingleChildScrollView(
@@ -36,7 +45,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   Positioned(
                       left: MediaQuery.of(context).size.width / 2.8,
-                      top: MediaQuery.of(context).size.height /4.5,
+                      top: MediaQuery.of(context).size.height / 4.5,
                       child: const CircleAvatar(
                         radius: 60,
                         backgroundColor: Colors.white,
@@ -89,6 +98,7 @@ class RegisterScreen extends StatelessWidget {
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
                                   HomeCubit.get(context).userRegisted(
+                                      name: nameController.text,
                                       mail: mailController.text,
                                       password: passwrodController.text);
                                 }

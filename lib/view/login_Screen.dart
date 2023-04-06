@@ -9,6 +9,7 @@ import 'package:netwrok/Widget/register_screen/my_elevated_button.dart';
 import 'package:netwrok/Widget/register_screen/my_text_form_field.dart';
 import 'package:netwrok/storage/shared.dart';
 import 'package:netwrok/view/Home_Screen.dart';
+import 'package:netwrok/view/button_app_bar.dart';
 import 'package:netwrok/view/forget_pass_screen.dart';
 import 'package:netwrok/view/register_screen.dart';
 
@@ -26,9 +27,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   var formKey = GlobalKey<FormState>();
   bool isChick = false;
-  //*=============================
-  //*get remember mail and pass password
-  //*=============================
+  //*======================================================
+  //*get remember mail and pass password in text form field
+  //*======================================================
 
   void rememberData() {
     if (SharedPreference.getDataSt(key: "mail") != null) {
@@ -57,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HomeScreen(),
+                  builder: (context) => MyButtonAppBarScreen(),
                 ));
           });
         }
@@ -196,7 +197,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             Container(
                               height: 60,
                               child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: ()async {
+                                  await  HomeCubit.get(context).signInWithGoogle();
+                                  },
                                   style: ButtonStyle(
                                       shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(

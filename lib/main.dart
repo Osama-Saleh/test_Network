@@ -8,6 +8,7 @@ import 'package:netwrok/Cubit/home_cubit_state.dart';
 import 'package:netwrok/constaint/constant.dart';
 import 'package:netwrok/network/http_helper.dart';
 import 'package:netwrok/storage/shared.dart';
+import 'package:netwrok/view/button_app_bar.dart';
 import 'package:netwrok/view/register_screen.dart';
 import 'package:netwrok/view/splash_screen.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit()..getProducts(),
+      create: (context) => HomeCubit()..getUserDate()..getProducts(),
       child: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
               ),
               home: 
+              // MyButtonAppBarScreen()
               RegisterScreen()
               // HomeScreen(),
               // const  SplashScreen(),
