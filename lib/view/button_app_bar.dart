@@ -11,18 +11,18 @@ class MyButtonAppBarScreen extends StatefulWidget {
 }
 
 class _MyButtonAppBarScreenState extends State<MyButtonAppBarScreen> {
-    int index = 0;
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     var cubit = HomeCubit.get(context);
     return Scaffold(
       body: cubit.screens[index],
       bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.transparent,
           currentIndex: index,
           onTap: (value) {
             setState(() {
-            index = value;
-              
+              index = value;
             });
             // return cubit.changeBottomNavigationBarItem(index);
           },

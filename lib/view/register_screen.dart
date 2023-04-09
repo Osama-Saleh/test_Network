@@ -25,7 +25,7 @@ class RegisterScreen extends StatelessWidget {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => MyButtonAppBarScreen(),
+                builder: (context) => LoginScreen(),
               ));
         }
       },

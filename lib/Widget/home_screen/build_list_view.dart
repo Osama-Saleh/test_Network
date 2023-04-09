@@ -7,10 +7,11 @@ import 'package:netwrok/Cubit/home_cubit_state.dart';
 
 class BuildListView extends StatelessWidget {
   int? index;
-   BuildListView({super.key,this.index});
+  BuildListView({super.key, this.index});
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit,HomeStates>(
+    var cubit = HomeCubit.get(context);
+    return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {},
       builder: (context, state) {
         return Row(
@@ -34,7 +35,14 @@ class BuildListView extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-            )
+            ),
+            IconButton(
+                onPressed: () {
+                  cubit.changeFavoriteIcon(index: index);
+                  // cubit.getProducts();
+                  print("isFavorite");
+                },
+                icon: cubit.isFavorite![index]! ? Icon(Icons.favorite) : Icon(Icons.favorite_border))
           ],
         );
       },

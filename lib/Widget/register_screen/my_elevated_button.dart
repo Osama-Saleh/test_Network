@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:netwrok/Cubit/home_cubit.dart';
 
 class MyElevatedButton extends StatelessWidget {
-  const MyElevatedButton({
+  MyElevatedButton({
     super.key,
-    required this.formKey,
-   
+    this.formKey,
     required this.text,
-    required this.onPressed
+    required this.onPressed,
+    this.backgroundColor,
   });
   final String? text;
-  final GlobalKey<FormState> formKey;
- 
+  GlobalKey<FormState>? formKey;
+  Color? backgroundColor = new Color.fromARGB(255, 48, 119, 177);
   final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed:onPressed,
-       
-      style: const ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(
-        Color.fromARGB(255, 48, 119, 177),
-      )),
+      onPressed: onPressed,
+      style: ButtonStyle(
+          backgroundColor: MaterialStatePropertyAll(backgroundColor)),
       child: Text(
         text!,
       ),

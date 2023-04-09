@@ -5,8 +5,14 @@ class MyTextFormField extends StatelessWidget {
   double? border;
   TextEditingController? controller;
   TextInputType? keyboardType;
+  String? Function(String?)? validator;
   MyTextFormField(
-      {super.key, required this.text, required this.controller, this.border,this.keyboardType});
+      {super.key,
+      required this.text,
+      required this.controller,
+      this.validator,
+      this.border,
+      this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,6 @@ class MyTextFormField extends StatelessWidget {
         }
         return null;
       },
-      
       decoration: InputDecoration(
         hintText: text,
         enabledBorder: OutlineInputBorder(

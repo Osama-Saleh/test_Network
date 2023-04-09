@@ -8,6 +8,7 @@ import 'package:netwrok/Cubit/home_cubit_state.dart';
 import 'package:netwrok/constaint/constant.dart';
 import 'package:netwrok/network/http_helper.dart';
 import 'package:netwrok/storage/shared.dart';
+import 'package:netwrok/view/Home_Screen.dart';
 import 'package:netwrok/view/button_app_bar.dart';
 import 'package:netwrok/view/register_screen.dart';
 import 'package:netwrok/view/splash_screen.dart';
@@ -19,7 +20,7 @@ void main() async {
   await SharedPreference.initialSharedPreference();
    Constant.uid = await SharedPreference.getDataSt(key: "uid");
 
-print("uid : ${Constant.uid}");
+print("uid main: ${Constant.uid}");
   runApp(const MyApp());
 }
 
@@ -42,8 +43,8 @@ class MyApp extends StatelessWidget {
               ),
               home: 
               // MyButtonAppBarScreen()
-              RegisterScreen()
-              // HomeScreen(),
+              // RegisterScreen()
+              HomeScreen(),
               // const  SplashScreen(),
               );
         },

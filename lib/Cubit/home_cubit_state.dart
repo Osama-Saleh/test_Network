@@ -3,11 +3,7 @@ class HomeStates {}
 
 class InitState extends HomeStates {}
 
-class ProductLoadingState extends HomeStates {}
 
-class ProductSuccsessgState extends HomeStates {}
-
-class ProductErrorState extends HomeStates {}
 
 class RegisterLoadingState extends HomeStates {}
 
@@ -25,6 +21,8 @@ class SigninSuccessState extends HomeStates {
 }
 
 class SigninErrorState extends HomeStates {}
+
+class SignOutState extends HomeStates {}
 
 class ChangeBottomNavBarState extends HomeStates {}
 
@@ -51,3 +49,12 @@ class ProfileImageLoadingState extends HomeStates {}
 class ProfileImageSuccessState extends HomeStates {}
 
 class ProfileImageErrorState extends HomeStates {}
+
+// * products
+class ProductLoadingState extends HomeStates {}
+
+class ProductSuccsessgState extends HomeStates {}
+
+class ProductErrorState extends HomeStates {}
+
+class ChangeFavoritesIcon extends HomeStates{}

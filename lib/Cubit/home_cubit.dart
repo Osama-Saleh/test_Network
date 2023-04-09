@@ -14,6 +14,7 @@ import 'package:netwrok/constaint/constant.dart';
 import 'package:netwrok/model/product_model.dart';
 import 'package:netwrok/model/user_model.dart';
 import 'package:netwrok/network/http_helper.dart';
+import 'package:netwrok/storage/shared.dart';
 import 'package:netwrok/view/Home_Screen.dart';
 import 'package:netwrok/view/setting_screen.dart';
 
@@ -61,6 +62,15 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(SigninErrorState());
       print("SigninErrorState $onError");
     });
+  }
+  //*==================================================//
+  //*=================  sign Out  =====================//
+  //*================================================//
+
+  void signOut() {
+    FirebaseAuth.instance.signOut();
+    SharedPreference.removeDate(key: "uid");
+    emit(SignOutState());
   }
 
   //*==================================================//
@@ -135,7 +145,7 @@ class HomeCubit extends Cubit<HomeStates> {
   //*====================================================//
 
   UserModel? userModel;
-  void getUserDate() async {
+  Future getUserDate() async {
     emit(GetUserDateLoadingState());
     print("GetUserDateLoadingState");
     final value = await FirebaseFirestore.instance
@@ -143,6 +153,8 @@ class HomeCubit extends Cubit<HomeStates> {
         .doc(Constant.uid)
         .get();
     userModel = UserModel.fromJson(value.data()!);
+    print("Data of users  : ${value.data()!}");
+    print("Uid cubit : ${Constant.uid}");
     emit(GetUserDateSuccessState());
     print("GetUserDateSuccessState");
     //     .then((value) {
@@ -156,18 +168,18 @@ class HomeCubit extends Cubit<HomeStates> {
     // });
   }
 
-  void updateUserData({
+  Future updateUserData({
     String? name,
     String? profileImage,
     String? id,
     String? mail,
-  }) {
+  }) async {
     emit(UpdateUserDateLoadingState());
     print("UpdateUserDateLoadingState");
 
     UserModel model = UserModel(
       name: name ?? userModel!.name,
-      profileImage:profileImage ?? userModel!.profileImage ,
+      profileImage: profileImage ?? userModel!.profileImage ?? " ",
       id: Constant.uid,
       mail: userModel!.mail,
     );
@@ -181,6 +193,7 @@ class HomeCubit extends Cubit<HomeStates> {
       print("UpdateUserDateSuccessState");
     }).catchError((onError) {
       emit(UpdateUserDateErrorState());
+
       print("UpdateUserDateErrorState");
     });
   }
@@ -243,6 +256,7 @@ class HomeCubit extends Cubit<HomeStates> {
   //*=================git products from API===============//
   //*=====================================================//
   List<ProductModel>? product;
+  Map<int, bool>? isFavorite = {};
   void getProducts() async {
     emit(ProductLoadingState());
     print("ProductLoadingState");
@@ -256,7 +270,14 @@ class HomeCubit extends Cubit<HomeStates> {
           )
           .toList();
       product = temp;
-      print("product : ${product!.length}");
+      temp.forEach((element) {
+        isFavorite!.addAll({element.id-1: false});
+      });
+      // temp.forEach((element) {
+      //   isFavorite!.addAll({element.id : false});
+      //   print("element : ${element.id}");
+      // });
+      print("product : ${product![0]}");
       print("product : ${product![0].id}");
 
       emit(ProductSuccsessgState());
@@ -265,5 +286,29 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(ProductErrorState());
       print("ProductErrorState $error");
     }
+  }
+
+  //*=====================================================//
+//*============= change Favorites items  ===============//
+//*=====================================================//
+  List? myFavorites=[];
+  void changeFavoriteIcon({int? index}) {
+    // myFavorites = [];
+    print("is favorites for index $index ${isFavorite![index]}");
+    if (isFavorite![index] == false) {
+      isFavorite![index!] = true;
+      myFavorites!.add(isFavorite![index]);
+      print(isFavorite![index]);
+      print("----------------------------------");
+      emit(ChangeFavoritesIcon());
+    } else if (isFavorite![index] == true) {
+      
+      myFavorites!.removeWhere((index) =>isFavorite![index!] == true );
+      isFavorite![index!] = false;
+      print(isFavorite![index]);
+      print("----------------------------------");
+      emit(ChangeFavoritesIcon());
+    }
+    print("myFavo $myFavorites");
   }
 }

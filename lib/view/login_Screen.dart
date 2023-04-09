@@ -7,6 +7,7 @@ import 'package:netwrok/Cubit/home_cubit_state.dart';
 import 'package:netwrok/Widget/my_divider.dart';
 import 'package:netwrok/Widget/register_screen/my_elevated_button.dart';
 import 'package:netwrok/Widget/register_screen/my_text_form_field.dart';
+import 'package:netwrok/constaint/constant.dart';
 import 'package:netwrok/storage/shared.dart';
 import 'package:netwrok/view/Home_Screen.dart';
 import 'package:netwrok/view/button_app_bar.dart';
@@ -55,11 +56,16 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state is SigninSuccessState) {
           SharedPreference.saveData(Key: "uid", value: state.token)
               .then((value) {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyButtonAppBarScreen(),
-                ));
+            Constant.uid = SharedPreference.getDataSt(key: "uid");
+            HomeCubit.get(context).getUserDate().then((value) {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyButtonAppBarScreen(),
+                  ));
+            }).catchError((error) {
+              print("Error : $error");
+            });
           });
         }
       },
@@ -197,8 +203,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             Container(
                               height: 60,
                               child: ElevatedButton(
-                                  onPressed: ()async {
-                                  await  HomeCubit.get(context).signInWithGoogle();
+                                  onPressed: () async {
+                                    await HomeCubit.get(context)
+                                        .signInWithGoogle();
                                   },
                                   style: ButtonStyle(
                                       shape: MaterialStateProperty.all<

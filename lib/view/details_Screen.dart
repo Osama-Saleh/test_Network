@@ -20,7 +20,10 @@ class DetailsScreen extends StatelessWidget {
             children: [
               Image(
                   image: NetworkImage(
-                      "${HomeCubit.get(context).product![index!].image}"))
+                      "${HomeCubit.get(context).product![index!].image}"),fit: BoxFit.fill,
+                      height: 300,
+                      width: double.infinity,
+                      )
             ],
           ),
         );

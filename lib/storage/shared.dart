@@ -13,4 +13,8 @@ class SharedPreference {
   static String? getDataSt({required String? key}) {
     return sharedPreference?.getString(key!);
   }
+
+  static String? removeDate({required String? key}) {
+    sharedPreference!.remove(key!);
+  }
 }
