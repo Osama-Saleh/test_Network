@@ -256,7 +256,8 @@ class HomeCubit extends Cubit<HomeStates> {
   //*=================git products from API===============//
   //*=====================================================//
   List<ProductModel>? product;
-  Map<int, bool>? isFavorite = {};
+  // Map<int, bool>? isFavorite = {};
+  Map<int, ProductModel>? isFavorite ;
   void getProducts() async {
     emit(ProductLoadingState());
     print("ProductLoadingState");
@@ -271,7 +272,7 @@ class HomeCubit extends Cubit<HomeStates> {
           .toList();
       product = temp;
       temp.forEach((element) {
-        isFavorite!.addAll({element.id-1: false});
+        isFavorite!.addAll({element.id - 1:element });
       });
       // temp.forEach((element) {
       //   isFavorite!.addAll({element.id : false});
@@ -291,24 +292,24 @@ class HomeCubit extends Cubit<HomeStates> {
   //*=====================================================//
 //*============= change Favorites items  ===============//
 //*=====================================================//
-  List? myFavorites=[];
-  void changeFavoriteIcon({int? index}) {
-    // myFavorites = [];
-    print("is favorites for index $index ${isFavorite![index]}");
-    if (isFavorite![index] == false) {
-      isFavorite![index!] = true;
-      myFavorites!.add(isFavorite![index]);
-      print(isFavorite![index]);
-      print("----------------------------------");
-      emit(ChangeFavoritesIcon());
-    } else if (isFavorite![index] == true) {
+  // List? myFavorites = [];
+  // void changeFavoriteIcon({int? index}) {
+  //   // myFavorites = [];
+  //   print("is favorites for index $index ${isFavorite![index]}");
+  //   if (isFavorite![index] == false) {
+  //     isFavorite![index!] = true;
+  //     myFavorites!.add(isFavorite![index]);
+  //     print(isFavorite![index]);
+  //     print("----------------------------------");
+  //     emit(ChangeFavoritesIcon());
+  //   } else if (isFavorite![index] == true) {
       
-      myFavorites!.removeWhere((index) =>isFavorite![index!] == true );
-      isFavorite![index!] = false;
-      print(isFavorite![index]);
-      print("----------------------------------");
-      emit(ChangeFavoritesIcon());
-    }
-    print("myFavo $myFavorites");
-  }
+  //     myFavorites!.removeWhere((index) => isFavorite![index!] == true);
+  //     isFavorite![index!] = false;
+  //     print(isFavorite![index]);
+  //     print("----------------------------------");
+  //     emit(ChangeFavoritesIcon());
+  //   }
+  //   print("myFavo $myFavorites");
+  // }
 }

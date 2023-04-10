@@ -38,11 +38,11 @@ class BuildListView extends StatelessWidget {
             ),
             IconButton(
                 onPressed: () {
-                  cubit.changeFavoriteIcon(index: index);
+                  // cubit.changeFavoriteIcon(index: index);
                   // cubit.getProducts();
                   print("isFavorite");
                 },
-                icon: cubit.isFavorite![index]! ? Icon(Icons.favorite) : Icon(Icons.favorite_border))
+                icon: true? Icon(Icons.favorite) : Icon(Icons.favorite_border))
           ],
         );
       },
