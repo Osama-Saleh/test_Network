@@ -30,6 +30,8 @@ class _MyButtonAppBarScreenState extends State<MyButtonAppBarScreen> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_bag), label: "Shopping"),
             BottomNavigationBarItem(
+                icon: Icon(Icons.favorite_rounded), label: "My Favorites"),
+            BottomNavigationBarItem(
                 icon: Icon(Icons.settings), label: "Settings"),
           ]),
     );

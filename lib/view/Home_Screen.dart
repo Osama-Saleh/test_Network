@@ -5,6 +5,7 @@ import 'package:netwrok/Cubit/home_cubit_state.dart';
 import 'package:netwrok/Widget/home_screen/build_list_view.dart';
 import 'package:animations/animations.dart';
 import 'package:netwrok/view/details_Screen.dart';
+import 'package:netwrok/view/favorites_items.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,6 +17,19 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: const Color.fromRGBO(47, 70, 109, 60),
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FavoritesItemsScreen(),
+                        ));
+                  },
+                  icon: Icon(Icons.favorite))
+            ],
+          ),
           body: HomeCubit.get(context).product == null
               ? const Center(child: CircularProgressIndicator())
               : SafeArea(

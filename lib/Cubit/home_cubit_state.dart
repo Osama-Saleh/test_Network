@@ -58,3 +58,7 @@ class ProductSuccsessgState extends HomeStates {}
 class ProductErrorState extends HomeStates {}
 
 class ChangeFavoritesIcon extends HomeStates{}
+
+class SaveFavoiteItemSuccsessgState extends HomeStates {}
+
+class SaveFavoiteItemErrorState extends HomeStates {}

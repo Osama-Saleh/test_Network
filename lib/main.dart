@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
               home: 
               // MyButtonAppBarScreen()
               // RegisterScreen()
-              HomeScreen(),
-              // const  SplashScreen(),
+              // HomeScreen(),
+              const  SplashScreen(),
               );
         },
       ),

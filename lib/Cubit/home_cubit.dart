@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, non_constant_identifier_names, avoid_types_as_parameter_names, unnecessary_brace_in_string_interps
 
 import 'dart:io';
 
@@ -16,6 +16,7 @@ import 'package:netwrok/model/user_model.dart';
 import 'package:netwrok/network/http_helper.dart';
 import 'package:netwrok/storage/shared.dart';
 import 'package:netwrok/view/Home_Screen.dart';
+import 'package:netwrok/view/favorites_items.dart';
 import 'package:netwrok/view/setting_screen.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
@@ -108,7 +109,11 @@ class HomeCubit extends Cubit<HomeStates> {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  List<Widget> screens = [HomeScreen(), SettignScreen()];
+  List<Widget> screens = [
+    HomeScreen(),
+    FavoritesItemsScreen(),
+    SettignScreen()
+  ];
   int currentIndex = 0;
   void changeBottomNavigationBarItem(int index) {
     currentIndex = index;
@@ -236,19 +241,13 @@ class HomeCubit extends Cubit<HomeStates> {
         .child("images/${Uri.file(profileImage!.path).pathSegments.last}")
         .putFile(profileImage!)
         .then((value) {
-      // print("${value}");
       value.ref.getDownloadURL().then((value) {
-        // print("getDownloadURLSuccess");
-
-        // print(value);
         updateUserData(name: name, profileImage: value);
-        // profileImageurl = value;
-        // print(value);
       }).catchError((Error) {
-        // print("getDownloadURLError ${Error}");
+        print("getDownloadURLError ${Error}");
       });
     }).catchError((Error) {
-      // print("uploadProfileImage ${Error}");
+      print("uploadProfileImage ${Error}");
     });
   }
 
@@ -256,8 +255,7 @@ class HomeCubit extends Cubit<HomeStates> {
   //*=================git products from API===============//
   //*=====================================================//
   List<ProductModel>? product;
-  // Map<int, bool>? isFavorite = {};
-  Map<int, ProductModel>? isFavorite ;
+  List<ProductModel>? favProduct = [];
   void getProducts() async {
     emit(ProductLoadingState());
     print("ProductLoadingState");
@@ -271,13 +269,7 @@ class HomeCubit extends Cubit<HomeStates> {
           )
           .toList();
       product = temp;
-      temp.forEach((element) {
-        isFavorite!.addAll({element.id - 1:element });
-      });
-      // temp.forEach((element) {
-      //   isFavorite!.addAll({element.id : false});
-      //   print("element : ${element.id}");
-      // });
+
       print("product : ${product![0]}");
       print("product : ${product![0].id}");
 
@@ -290,26 +282,33 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   //*=====================================================//
-//*============= change Favorites items  ===============//
+//*============= Add Favorites items  ===============//
 //*=====================================================//
-  // List? myFavorites = [];
-  // void changeFavoriteIcon({int? index}) {
-  //   // myFavorites = [];
-  //   print("is favorites for index $index ${isFavorite![index]}");
-  //   if (isFavorite![index] == false) {
-  //     isFavorite![index!] = true;
-  //     myFavorites!.add(isFavorite![index]);
-  //     print(isFavorite![index]);
-  //     print("----------------------------------");
-  //     emit(ChangeFavoritesIcon());
-  //   } else if (isFavorite![index] == true) {
-      
-  //     myFavorites!.removeWhere((index) => isFavorite![index!] == true);
-  //     isFavorite![index!] = false;
-  //     print(isFavorite![index]);
-  //     print("----------------------------------");
-  //     emit(ChangeFavoritesIcon());
-  //   }
-  //   print("myFavo $myFavorites");
-  // }
+
+  void changeFavoriteIcon({required ProductModel product}) {
+    product.isFavorite = !product.isFavorite;
+
+    if (product.isFavorite == true) {
+      favProduct!.add(product);
+    } else {
+      favProduct!.removeWhere((element) => element.id == product.id);
+    }
+    emit(ChangeFavoritesIcon());
+    print('length of fav => ${favProduct!.length}');
+  }
+
+  void saveFavoiteItem() {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(Constant.uid)
+        .collection("favorite")
+        .doc()
+        .set({"favorite": true}).then((value) {
+      emit(SaveFavoiteItemSuccsessgState());
+      print("SaveFavoiteItemSuccsessgState");
+    }).catchError((onError) {
+      emit(SaveFavoiteItemErrorState());
+      print("SaveFavoiteItemErrorState");
+    });
+  }
 }
