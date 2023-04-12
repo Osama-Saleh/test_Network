@@ -19,7 +19,7 @@ class ProductModel {
     required this.description,
     required this.category,
     required this.image,
-    required this.rating,
+    // required this.rating,
     required this.isFavorite,
   });
 
@@ -29,8 +29,8 @@ class ProductModel {
   String description;
   String category;
   String image;
-  Rating rating;
-  bool isFavorite=false;
+  // Rating rating;
+  int isFavorite=0;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
@@ -39,8 +39,8 @@ class ProductModel {
         description: json["description"],
         category: json["category"],
         image: json["image"],
-        isFavorite: false,
-        rating: Rating.fromJson(json["rating"]),
+        isFavorite: 0,
+        // rating: Rating.fromJson(json["rating"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,7 +51,7 @@ class ProductModel {
         "category": category,
         "image": image,
         "isFavorite": isFavorite,
-        "rating": rating.toJson(),
+        // "rating": rating.toJson(),
       };
 }
 

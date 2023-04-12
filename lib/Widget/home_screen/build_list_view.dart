@@ -38,12 +38,19 @@ class BuildListView extends StatelessWidget {
             ),
             IconButton(
                 onPressed: () {
-
-                  cubit.changeFavoriteIcon(product:HomeCubit.get(context).product![index!] );
+                  cubit
+                      .changeFavoriteIcon(
+                          product: HomeCubit.get(context).product![index!])
+                      .then((value) {
+                    cubit.insertData(HomeCubit.get(context).product![index!]);
+                  }).catchError((onError) {
+                    print("Error $onError");
+                  });
                   // cubit.getProducts();
-                  
                 },
-                icon: HomeCubit.get(context).product![index!].isFavorite?  Icon(Icons.favorite) : Icon(Icons.favorite_border))
+                icon: HomeCubit.get(context).product![index!].isFavorite ==1
+                    ? Icon(Icons.favorite)
+                    : Icon(Icons.favorite_border))
           ],
         );
       },

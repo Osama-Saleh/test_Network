@@ -62,3 +62,9 @@ class ChangeFavoritesIcon extends HomeStates{}
 class SaveFavoiteItemSuccsessgState extends HomeStates {}
 
 class SaveFavoiteItemErrorState extends HomeStates {}
+
+
+
+class CreateDataBaseLoadinState extends HomeStates{}
+class CreateDataBaseSuccessState extends HomeStates{}
+class CreateDataBaseErrorState extends HomeStates{}

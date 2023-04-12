@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, non_constant_identifier_names, avoid_types_as_parameter_names, unnecessary_brace_in_string_interps
+// ignore_for_file: avoid_print, non_constant_identifier_names, avoid_types_as_parameter_names, unnecessary_brace_in_string_interps, prefer_is_empty
 
 import 'dart:io';
 
@@ -18,6 +18,8 @@ import 'package:netwrok/storage/shared.dart';
 import 'package:netwrok/view/Home_Screen.dart';
 import 'package:netwrok/view/favorites_items.dart';
 import 'package:netwrok/view/setting_screen.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
   HomeCubit() : super(InitState());
@@ -157,7 +159,7 @@ class HomeCubit extends Cubit<HomeStates> {
         .collection("users")
         .doc(Constant.uid)
         .get();
-    userModel = UserModel.fromJson(value.data()!);
+    userModel = await UserModel.fromJson(value.data()!);
     print("Data of users  : ${value.data()!}");
     print("Uid cubit : ${Constant.uid}");
     emit(GetUserDateSuccessState());
@@ -255,7 +257,6 @@ class HomeCubit extends Cubit<HomeStates> {
   //*=================git products from API===============//
   //*=====================================================//
   List<ProductModel>? product;
-  List<ProductModel>? favProduct = [];
   void getProducts() async {
     emit(ProductLoadingState());
     print("ProductLoadingState");
@@ -285,30 +286,71 @@ class HomeCubit extends Cubit<HomeStates> {
 //*============= Add Favorites items  ===============//
 //*=====================================================//
 
-  void changeFavoriteIcon({required ProductModel product}) {
-    product.isFavorite = !product.isFavorite;
+  List<ProductModel>? favProduct = [];
+  Future changeFavoriteIcon({required ProductModel product}) async {
+    // product.isFavorite = !product.isFavorite;
 
-    if (product.isFavorite == true) {
+      print(product.isFavorite);
+    if (product.isFavorite == 0) {
       favProduct!.add(product);
+      product.isFavorite = 1;
+      emit(ChangeFavoritesIcon());
     } else {
-      favProduct!.removeWhere((element) => element.id == product.id);
+      favProduct!.removeWhere((element) {
+        product.isFavorite = 0;
+        emit(ChangeFavoritesIcon());
+        return element.id == product.id;
+      });
     }
     emit(ChangeFavoritesIcon());
     print('length of fav => ${favProduct!.length}');
   }
 
-  void saveFavoiteItem() {
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(Constant.uid)
-        .collection("favorite")
-        .doc()
-        .set({"favorite": true}).then((value) {
-      emit(SaveFavoiteItemSuccsessgState());
-      print("SaveFavoiteItemSuccsessgState");
-    }).catchError((onError) {
-      emit(SaveFavoiteItemErrorState());
-      print("SaveFavoiteItemErrorState");
-    });
+  Database? database;
+  Future createDataBase() async {
+    // path is name on table => 'todo.db'
+    database = await openDatabase(
+      "favorite.db",
+      version: 1,
+      onCreate: (db, version) async {
+        print("Created DataBase");
+        await db
+            .execute(
+                'CREATE TABLE favorites (id INTEGER PRIMARY KEY, title TEXT,price REAL,description TEXT, category TEXT,image TEXT,isFavorite INTEGER)')
+            .then((value) {
+          print("Created Table");
+        }).catchError((error) {
+          emit(CreateDataBaseErrorState());
+          print("CreateDataBaseErrorState");
+          print("database error: " + error);
+        });
+      },
+      onOpen: (db) async {
+        // await getDataBase(db);
+        // seperatedDataBase();
+        emit(CreateDataBaseSuccessState());
+        print("DataBase Is Opened");
+      },
+    );
+    // emit(CreateDataBaseSuccessState());
+  }
+
+  //* Insert data
+  Future<int> insertData(ProductModel productModel) async {
+    var result = await database!.insert("favorites", productModel.toJson());
+    print("insert result : ${result}");
+    return result;
+  }
+
+  Future<ProductModel?> getFavorite(int isFavorite) async {
+    // var sql = "SELECT * FORM favorites WHERE isFavorite = $isFavorite";
+    var sql = "SELECT * FORM favorites";
+    var result = await database!.rawQuery(sql);
+    print("result : ${result[0]}");
+    if (result.length == 0) {
+      return null;
+    }
+
+    return ProductModel.fromJson(result.first);
   }
 }

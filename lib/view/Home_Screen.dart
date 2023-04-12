@@ -17,19 +17,19 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: const Color.fromRGBO(47, 70, 109, 60),
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FavoritesItemsScreen(),
-                        ));
-                  },
-                  icon: Icon(Icons.favorite))
-            ],
-          ),
+          // appBar: AppBar(
+          //   actions: [
+          //     IconButton(
+          //         onPressed: () {
+          //           Navigator.push(
+          //               context,
+          //               MaterialPageRoute(
+          //                 builder: (context) => FavoritesItemsScreen(),
+          //               ));
+          //         },
+          //         icon: Icon(Icons.favorite))
+          //   ],
+          // ),
           body: HomeCubit.get(context).product == null
               ? const Center(child: CircularProgressIndicator())
               : SafeArea(

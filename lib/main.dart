@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit()..getUserDate()..getProducts(),
+      create: (context) => HomeCubit()..getUserDate()..getProducts()..createDataBase(),
       child: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
               home: 
               // MyButtonAppBarScreen()
               // RegisterScreen()
-              // HomeScreen(),
-              const  SplashScreen(),
+              HomeScreen(),
+              // const  SplashScreen(),
               );
         },
       ),

@@ -69,7 +69,7 @@ class FavoritesItemsScreen extends StatelessWidget {
                                       },
                                       icon: HomeCubit.get(context)
                                               .favProduct![index]
-                                              .isFavorite
+                                              .isFavorite == 1
                                           ? Icon(Icons.favorite)
                                           : Icon(Icons.favorite_border))
                                 ],
