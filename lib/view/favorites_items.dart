@@ -21,7 +21,7 @@ class _FavoritesItemsScreenState extends State<FavoritesItemsScreen> {
     // TODO: implement setState
     super.setState(fn);
     print("object");
-    HomeCubit.get(context).getFavorite();
+    // HomeCubit.get(context).getFavorite();
   }
 
   @override
@@ -32,9 +32,9 @@ class _FavoritesItemsScreenState extends State<FavoritesItemsScreen> {
         return Scaffold(
           backgroundColor: const Color.fromRGBO(47, 70, 109, 60),
           body: SafeArea(
-            child: HomeCubit.get(context).favProduct!.isEmpty ||
-                    HomeCubit.get(context).favProduct == null
-                ? Center(
+            child: HomeCubit.get(context).getFinalresult!.isEmpty ||
+                    HomeCubit.get(context).getFinalresult == null
+                ? const Center(
                     child: Text(
                     "Not Favorites items selected",
                     textAlign: TextAlign.center,

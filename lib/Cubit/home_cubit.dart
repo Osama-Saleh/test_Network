@@ -314,7 +314,7 @@ class HomeCubit extends Cubit<HomeStates> {
     print('length of fav => ${favProduct!.length}');
   }
 
-  Database? database;
+  Database? database ;
   Future createDataBase() async {
     // path is name on table => 'todo.db'
     database = await openDatabase(
@@ -335,7 +335,7 @@ class HomeCubit extends Cubit<HomeStates> {
       },
       onOpen: (db) async {
         // await getDataBase(db);
-        getFavorite();
+        getFavorite(db: db);
         emit(CreateDataBaseSuccessState());
         print("DataBase Is Opened");
       },
@@ -345,11 +345,11 @@ class HomeCubit extends Cubit<HomeStates> {
 
   //* Insert data
   var nresult;
-  Future insertData(ProductModel productModel) async {
+  Future insertData(ProductModel productModel,{Database? db}) async {
     emit(InsertDataLoadingState());
     print("InsertDataLoadingState");
     nresult = await database!.insert("favorites", productModel.toJson());
-    getFavorite();
+    getFavorite(db: db??database);
     print("InsertDataSuccessState");
     emit(InsertDataSuccessState());
     // .then((value) {
@@ -365,13 +365,13 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   List? getFinalresult;
-  Future<ProductModel?> getFavorite() async {
+  Future<ProductModel?> getFavorite({Database? db}) async {
     // var sql = "SELECT * FORM favorites WHERE isFavorite = $isFavorite";
     var sql = "SELECT * FROM favorites";
-    getFinalresult = await database!.rawQuery(sql);
+    getFinalresult = await  db!.rawQuery(sql);
     print("result : ${getFinalresult}");
     print("result length : ${getFinalresult!.length}");
-    print("result : ${getFinalresult![nresult - 1]}");
+    // print("result : ${getFinalresult![nresult - 1]}");
     // print("result : ${getFinalresult![nresult - 1]["title"]}");
     if (getFinalresult!.length == 0) {
       return null;
@@ -387,7 +387,7 @@ class HomeCubit extends Cubit<HomeStates> {
       print("delet value $value");
       print("DeleteFavoriteItemSuccessState");
       emit(DeleteFavoriteItemSuccessState());
-      getFavorite();
+      // getFavorite();
     }).catchError((onError) {
       print("DeleteFavoriteItemErrorState $onError");
       emit(DeleteFavoriteItemErrorState());
