@@ -7,8 +7,20 @@ import 'package:animations/animations.dart';
 import 'package:netwrok/view/details_Screen.dart';
 import 'package:netwrok/view/favorites_items.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  // void setState(VoidCallback fn) {
+  //   HomeCubit.get(context).getFavorite();
+  //   // TODO: implement setState
+  //   super.setState(fn);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +29,19 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: const Color.fromRGBO(47, 70, 109, 60),
-          // appBar: AppBar(
-          //   actions: [
-          //     IconButton(
-          //         onPressed: () {
-          //           Navigator.push(
-          //               context,
-          //               MaterialPageRoute(
-          //                 builder: (context) => FavoritesItemsScreen(),
-          //               ));
-          //         },
-          //         icon: Icon(Icons.favorite))
-          //   ],
-          // ),
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FavoritesItemsScreen(),
+                        ));
+                  },
+                  icon: Icon(Icons.favorite))
+            ],
+          ),
           body: HomeCubit.get(context).product == null
               ? const Center(child: CircularProgressIndicator())
               : SafeArea(

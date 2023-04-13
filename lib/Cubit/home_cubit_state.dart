@@ -3,8 +3,6 @@ class HomeStates {}
 
 class InitState extends HomeStates {}
 
-
-
 class RegisterLoadingState extends HomeStates {}
 
 class RegisterSuccessState extends HomeStates {}
@@ -57,14 +55,31 @@ class ProductSuccsessgState extends HomeStates {}
 
 class ProductErrorState extends HomeStates {}
 
-class ChangeFavoritesIcon extends HomeStates{}
+class ChangeFavoritesIcon extends HomeStates {}
 
 class SaveFavoiteItemSuccsessgState extends HomeStates {}
 
 class SaveFavoiteItemErrorState extends HomeStates {}
 
+//* Data Base 
+class CreateDataBaseLoadinState extends HomeStates {}
 
+class CreateDataBaseSuccessState extends HomeStates {}
 
-class CreateDataBaseLoadinState extends HomeStates{}
-class CreateDataBaseSuccessState extends HomeStates{}
-class CreateDataBaseErrorState extends HomeStates{}
+class CreateDataBaseErrorState extends HomeStates {}
+
+class InsertDataLoadingState extends HomeStates {}
+
+class InsertDataSuccessState extends HomeStates {}
+
+class InsertDataErrorState extends HomeStates {}
+
+class GetFavoriteDataLoadingState extends HomeStates {}
+
+class GetFavoriteDataSuccessState extends HomeStates {}
+
+class GetFavoriteDataErrorState extends HomeStates {}
+
+class DeleteFavoriteItemSuccessState extends HomeStates {}
+
+class DeleteFavoriteItemErrorState extends HomeStates {}
