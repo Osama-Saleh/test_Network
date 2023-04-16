@@ -82,4 +82,4 @@ class GetFavoriteDataErrorState extends HomeStates {}
 
 class DeleteFavoriteItemSuccessState extends HomeStates {}
 
-class DeleteFavoriteItemErrorState extends HomeStates {}
+class DeleteFavoriteItemLoadingState extends HomeStates {}

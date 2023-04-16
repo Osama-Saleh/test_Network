@@ -292,29 +292,31 @@ class HomeCubit extends Cubit<HomeStates> {
 //*============= Add Favorites items  ===============//
 //*=====================================================//
 
-  List<ProductModel>? favProduct = [];
+  // List<ProductModel>? favProduct = [];
   Future changeFavoriteIcon({required ProductModel product}) async {
     // product.isFavorite = !product.isFavorite;
 
     print(product.isFavorite);
     if (product.isFavorite == 0) {
-      favProduct!.add(product);
+      // favProduct!.add(product);
       product.isFavorite = 1;
       insertData(product);
+      print("ChangeFavoritesIcon");
       emit(ChangeFavoritesIcon());
     } else {
-      favProduct!.removeWhere((element) {
       product.isFavorite = 0;
       deleteFavoriteItem(product);
-        emit(ChangeFavoritesIcon());
-        return element.id == product.id;
-      });
+      emit(ChangeFavoritesIcon());
+      print("ChangeFavoritesIcon");
+      // favProduct!.removeWhere((element) {
+      //   return element.id == product.id;
+      // });
     }
     emit(ChangeFavoritesIcon());
-    print('length of fav => ${favProduct!.length}');
+    // print('length of fav => ${favProduct!.length}');
   }
 
-  Database? database ;
+  Database? database;
   Future createDataBase() async {
     // path is name on table => 'todo.db'
     database = await openDatabase(
@@ -345,31 +347,21 @@ class HomeCubit extends Cubit<HomeStates> {
 
   //* Insert data
   var nresult;
-  Future insertData(ProductModel productModel,{Database? db}) async {
+  Future insertData(ProductModel productModel, {Database? db}) async {
     emit(InsertDataLoadingState());
     print("InsertDataLoadingState");
     nresult = await database!.insert("favorites", productModel.toJson());
-    getFavorite(db: db??database);
+    getFavorite(db: db ?? database);
     print("InsertDataSuccessState");
     emit(InsertDataSuccessState());
-    // .then((value) {
-    //   print("Value insert $value");
-    //   getFavorite(value);
-    //   print("InsertDataSuccessState");
-    // }).catchError((onError) {
-    //   print("InsertDataErrorState $onError");
-    //   emit(InsertDataErrorState());
-    // });
-    // print("insert result : ${result}");
-    // return result;
   }
 
   List? getFinalresult;
   Future<ProductModel?> getFavorite({Database? db}) async {
     // var sql = "SELECT * FORM favorites WHERE isFavorite = $isFavorite";
     var sql = "SELECT * FROM favorites";
-    getFinalresult = await  db!.rawQuery(sql);
-    print("result : ${getFinalresult}");
+    getFinalresult = await db!.rawQuery(sql);
+    print("Favorite data : ${getFinalresult}");
     print("result length : ${getFinalresult!.length}");
     // print("result : ${getFinalresult![nresult - 1]}");
     // print("result : ${getFinalresult![nresult - 1]["title"]}");
@@ -380,17 +372,18 @@ class HomeCubit extends Cubit<HomeStates> {
     return ProductModel.fromJson(getFinalresult!.first);
   }
 
-  Future deleteFavoriteItem(ProductModel productModel) async {
+//! Why dont delete item when useing isFavorite
+  Future deleteFavoriteItem(ProductModel productModel, {Database? db}) async {
+    emit(DeleteFavoriteItemLoadingState());
     print("DeleteFavoriteItemLoadinState");
-    return await database!.delete("favorites",
-        where: "isFavorite",whereArgs: [0]).then((value) {
-      print("delet value $value");
-      print("DeleteFavoriteItemSuccessState");
-      emit(DeleteFavoriteItemSuccessState());
-      // getFavorite();
-    }).catchError((onError) {
-      print("DeleteFavoriteItemErrorState $onError");
-      emit(DeleteFavoriteItemErrorState());
-    });
+    final value = await database!.delete("favorites",
+        where: "id = ?", whereArgs: [productModel.id]);
+    // final value = await database!.delete("favorites",
+    //     where: "isFavorite = ?", whereArgs: [productModel.isFavorite]);
+    getFavorite(db: db ?? database);
+    print("delet value $value");
+    print("DeleteFavoriteItemSuccessState");
+    emit(DeleteFavoriteItemSuccessState());
   }
 }
+
